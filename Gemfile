@@ -23,6 +23,7 @@ gem 'will_paginate', '~> 3.3.0'
 # Use Devise
 gem 'bootstrap', '~> 5.0.1'
 gem 'devise', '~> 4.8'
+gem 'devise-bootstrap-views', '~> 1.0'
 gem 'hirb'
 gem 'jquery-rails'
 # Use Active Storage variant
