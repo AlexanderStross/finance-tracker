@@ -11,9 +11,11 @@
   </head>
 
   <body>
+    <div id="page-content" class="container">
+      <%= render 'layouts/mainnav' %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-
     <%= yield %>
+    </div>
   </body>
 </html>
