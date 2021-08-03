@@ -1,0 +1,17 @@
+<% if object.errors.any? %>
+  <div class="wow fadeIn">
+    <div class="container">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">The following errors prevented the
+          <%= object.class.name.downcase %>
+          from being saved</h4>
+        <ul>
+          <% object.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+<% end %>

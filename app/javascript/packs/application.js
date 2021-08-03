@@ -22,3 +22,11 @@ import "bootstrap"
 // import the app/assets/stylesheets/application.css
 // file from the previous step.
 import "../../assets/stylesheets/application"
+
+$(document).on('turbolinks:load', function() {
+  window.setTimeout(function() {
+    $('.alert').fadeTo(500, 0).slideUp(500, function() {
+      $(this).remove();
+    });
+  }, 3000);
+})
