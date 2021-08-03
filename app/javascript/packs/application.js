@@ -21,7 +21,7 @@ import "bootstrap"
 
 // import the app/assets/stylesheets/application.css
 // file from the previous step.
-import "../../assets/stylesheets/application"
+// import "../../assets/stylesheets/application"
 
 $(document).on('turbolinks:load', function() {
   window.setTimeout(function() {
