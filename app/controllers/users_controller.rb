@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     @tracked_stocks = current_user.stocks
   end
 
-  def my_friends
+  def friends
     @friends = current_user.friends
   end
 
@@ -17,13 +17,13 @@ class UsersController < ApplicationController
     if params[:friend].present?
       @friends = User.search(params[:friend])
       @friends = current_user.except_current_user(@friends)
-      if @friends
+      if @friends == []
         respond_to do |format|
+          flash.now[:alert] = "Couldn't find user"
           format.js { render partial: 'users/friend_result' }
         end
       else
         respond_to do |format|
-          flash.now[:alert] = "Couldn't find user"
           format.js { render partial: 'users/friend_result' }
         end
       end
