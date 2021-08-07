@@ -15,10 +15,14 @@ class Stock < ApplicationRecord
     Stock.where(ticker: ticker_symbol).first
   end
 
-  def self.update_price(ticker_symbol)
-    client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
-                                   connect_timeout: 300)
-    remote_stock = TwelvedataRuby.client.quote(symbol: ticker_symbol).parsed_body
-    Stock.where(ticker: ticker_symbol).first.update(last_price: remote_stock[:close].to_d)
+  def self.update_prices
+    all.each do |s|
+      client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
+                                     connect_timeout: 300)
+      pulled_stock = TwelvedataRuby.client.quote(symbol: s.ticker).parsed_body
+      s.last_price = pulled_stock[:close].to_d
+      s.save
+      sleep(8)
+    end
   end
 end

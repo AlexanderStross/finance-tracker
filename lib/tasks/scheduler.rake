@@ -6,7 +6,5 @@
 #   sleep wait_time if wait_time > 0
 # end
 task update_tickers: :environment do
-  Stock.each do |s|
-    Stock.update_price(s.ticker_symbol)
-  end
+  Stock.update_prices
 end
