@@ -45,7 +45,7 @@ class StocksController < ApplicationController
         logger.debug "#{stock.ticker} price saved in database: #{stock.last_price} remote price: #{td_stock[:close].to_d}"
         logger.debug "#{stock.ticker} Price Changed? : #{stock.last_price != td_stock[:close].to_d}"
         stock.update(last_price: td_stock[:close].to_d)
-        # sleep(8) if stock != @stocks.last
+        sleep(8) if stock != @stocks.last
       end
       respond_to do |format|
         flash.now[:notice] = 'Prices updated!' unless td_stock[:code]
