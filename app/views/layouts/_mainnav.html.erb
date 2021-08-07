@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid" >
+  <div class="container-fluid">
     <%= link_to 'FXT', root_path, class: "navbar-brand"%>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -12,36 +12,30 @@
         <li class="nav-item <%= 'active' if request.path == my_portfolio_path %>">
           <%= link_to 'My Portfolio', my_portfolio_path, class: "nav-link"%>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Profile
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
-              <%= fa_icon 'edit' %> Edit Profile
-            <% end %>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
         <li class="nav-item <%= 'active' if request.path == friends_path %>">
           <%= link_to 'Friends', friends_path, class: "nav-link"%>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item text-muted user-name">
-          <%= fa_icon 'user' %> <%= current_user.full_name if user_signed_in? %>
-        </li>
-        <li class="nav-item">
-          <%= link_to('Sign out', destroy_user_session_path, method: :delete, class: "btn btn-danger logout-button") if user_signed_in? %>
-        </li>
-      </ul>
 
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= fa_icon 'user' %> <%= current_user.full_name if user_signed_in? %>
+          </a>
+
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><%= link_to edit_user_registration_path, class: "dropdown-item" do %>
+            <%= fa_icon 'edit' %>
+            Edit Profile
+          <% end %>
+      </ul>
+      </li>
+      <li class="nav-item">
+        <%= link_to('Sign out', destroy_user_session_path, method: :delete, class: "btn btn-danger logout-button") if user_signed_in? %>
+      </li>
+    </ul>
+
+    <!-- <form class="d-flex"> <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> <button class="btn btn-outline-success" type="submit">Search</button> </form> -->
   </div>
+</div>
 </nav>
