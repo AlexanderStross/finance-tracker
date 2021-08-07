@@ -26,6 +26,7 @@ class Stock < ApplicationRecord
                                      connect_timeout: 300)
       pulled_stock = TwelvedataRuby.client.quote(symbol: s.ticker).parsed_body
       s.last_price = pulled_stock[:close].to_d
+      s.exchange = pulled_stock[:exchange]
       s.save
       sleep(8) unless @stocks.last
     end
