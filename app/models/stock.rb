@@ -27,7 +27,7 @@ class Stock < ApplicationRecord
       pulled_stock = TwelvedataRuby.client.quote(symbol: s.ticker).parsed_body
       s.last_price = pulled_stock[:close].to_d
       s.save
-      sleep(15)
+      sleep(8) unless @stocks.last
     end
 
     def self.update_price(_ticker_symbol)
