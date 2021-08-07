@@ -24,6 +24,7 @@ class StocksController < ApplicationController
     @user = current_user
     @tracked_stocks = current_user.stocks
     @stocks = Stock.all
+    td_stock = []
     if @stocks
       @stocks.each do |stock|
         logger.debug "#{stock.ticker} updated at: #{stock.updated_at} ten minutes ago was #{10.minutes.ago}"
@@ -34,6 +35,12 @@ class StocksController < ApplicationController
         client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
                                        connect_timeout: 300)
         td_stock = TwelvedataRuby.client.quote(symbol: stock.ticker).parsed_body
+        if td_stock[:code]
+          logger.debug 'API Error Detected'
+          flash.now[:alert] = "Status: #{td_stock[:status]}, Code: #{td_stock[:code]}, Message: #{td_stock[:message]}"
+        end
+        break if td_stock[:code]
+
         logger.debug td_stock.to_s
         logger.debug "#{stock.ticker} price saved in database: #{stock.last_price} remote price: #{td_stock[:close].to_d}"
         logger.debug "#{stock.ticker} Price Changed? : #{stock.last_price != td_stock[:close].to_d}"
@@ -41,7 +48,7 @@ class StocksController < ApplicationController
         # sleep(8) if stock != @stocks.last
       end
       respond_to do |format|
-        flash.now[:success] = 'Prices updated!'
+        flash.now[:notice] = 'Prices updated!' unless td_stock[:code]
         format.js { render partial: 'stocks/update_list' }
       end
     end

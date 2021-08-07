@@ -16,9 +16,11 @@
 <% end %>
 </div>
 <div id="results"></div>
+<div id="stock-list">
 <% if !@tracked_stocks.empty? %>
 <%= render 'stocks/list'%>
 <% end %>
+</div>
 
 <%= link_to('Update Prices Now', update_prices_now_path, remote: true, method: :get , class: "btn btn-success logout-button") %>
 <p>This may take a while as the free api key I'm using only allows 8 transcations a minute.
