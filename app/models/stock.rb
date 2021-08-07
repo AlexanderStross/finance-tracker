@@ -8,9 +8,9 @@ class Stock < ApplicationRecord
     client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
                                    connect_timeout: 300)
     pulled_stock = TwelvedataRuby.client.quote(symbol: ticker_symbol).parsed_body
-    unless pulled_stock[:code].present?
-      new(ticker: ticker_symbol, name: pulled_stock[:name],
-          last_price: pulled_stock[:close].to_d)
+    unless pulled_asset[:code].present?
+      new(ticker: ticker_symbol, name: pulled_asset[:name],
+          last_price: pulled_asset[:close].to_d, exchange: pulled_asset[:exchange])
     end
   end
 
