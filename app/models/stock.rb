@@ -12,14 +12,13 @@ class Stock < ApplicationRecord
   end
 
   def self.check_db(ticker_symbol)
-    stock = Stock.where(ticker: ticker_symbol).first
-    if stock
-      client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
-                                     connect_timeout: 300)
-      remote_stock = TwelvedataRuby.client.quote(symbol: ticker_symbol).parsed_body
-      stock.last_price = remote_stock[:close].to_d
-      stock.save
-      stock
-    end
+    Stock.where(ticker: ticker_symbol).first
+  end
+
+  def self.update_price(ticker_symbol)
+    client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
+                                   connect_timeout: 300)
+    remote_stock = TwelvedataRuby.client.quote(symbol: ticker_symbol).parsed_body
+    Stock.where(ticker: ticker_symbol).first.update(last_price: remote_stock[:close].to_d)
   end
 end
