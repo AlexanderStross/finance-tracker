@@ -44,6 +44,7 @@ class StocksController < ApplicationController
         logger.debug td_stock.to_s
         logger.debug "#{stock.ticker} price saved in database: #{stock.last_price} remote price: #{td_stock[:close].to_d}"
         logger.debug "#{stock.ticker} Price Changed? : #{stock.last_price != td_stock[:close].to_d}"
+        stock.update(exchange: td_stock[:exchange])
         stock.update(last_price: td_stock[:close].to_d)
         sleep(8) unless stock == @stocks.last
       end

@@ -8,6 +8,7 @@
       <thead>
         <tr>
           <th scope="col">Ticker</th>
+          <th scope="col">Exchange</th>
           <th scope="col">Name</th>
           <th scope="col">Price</th>
           <th scope="col">Updated</th>
@@ -18,6 +19,7 @@
         <% @tracked_stocks.each do |stock| %>
           <tr>
             <th scope="row"><%= stock.ticker %></th>
+            <td><%= stock.exchange %></td>
             <td><%= stock.name %></td>
             <td><%= stock.last_price %></td>
             <td><%= time_ago_in_words(stock.updated_at) %> ago</td>

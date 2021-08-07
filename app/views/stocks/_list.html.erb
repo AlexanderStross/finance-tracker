@@ -1,9 +1,14 @@
+<div class="results-block">
+  <%= render 'layouts/messages' %>
+</div>
+
 <div class="row">
   <div class="col-9">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th scope="col">Ticker</th>
+          <th scope="col">Exchange</th>
           <th scope="col">Name</th>
           <th scope="col">Price</th>
           <th scope="col">Updated</th>
@@ -14,6 +19,7 @@
         <% @tracked_stocks.each do |stock| %>
           <tr>
             <th scope="row"><%= stock.ticker %></th>
+            <td><%= stock.exchange %></td>
             <td><%= stock.name %></td>
             <td><%= stock.last_price %></td>
             <td><%= time_ago_in_words(stock.updated_at) %> ago</td>
