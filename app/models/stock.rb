@@ -28,7 +28,7 @@ class Stock < ApplicationRecord
       s.last_price = pulled_stock[:close].to_d
       s.exchange = pulled_stock[:exchange]
       s.save
-      sleep(8) unless @stocks.last
+      sleep(8) unless s == @stocks.last
     end
 
     def self.update_price(_ticker_symbol)
