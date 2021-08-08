@@ -5,6 +5,7 @@
 <% if @stock %>
   <div class="card card-header results-block">
     <strong>Symbol: </strong> <%= @stock.ticker %>
+    <strong>Exchange: </strong> <%= @stock.exchange %>
     <strong>Name: </strong> <%= @stock.name %>
     <strong>Price: </strong> <%= @stock.last_price %>
     <%= link_to 'Add to portforlio', user_stocks_path(user: current_user, ticker: @stock.ticker ),
