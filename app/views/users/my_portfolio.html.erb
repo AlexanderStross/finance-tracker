@@ -22,7 +22,7 @@
 <% end %>
 </div>
 
-<%= link_to('Update Prices Now', update_prices_now_path, remote: true, method: :get , class: "btn btn-success logout-button") %>
+<%= link_to('Update Prices Now', update_prices_now_path, remote: true, method: :get , class: "btn btn-success logout-button") %> <div id="spinner"></div>
 <p>This may take a while as the free api key I'm using only allows 8 transcations a minute.
 Markets that are closed will not update.  If all the prices show 0 that is because I exceed
 my API request quota.</p>
