@@ -5,7 +5,8 @@ class Stock < ApplicationRecord
   validates :name, :ticker, presence: true
 
   def self.new_lookup(ticker_symbol)
-    client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
+    key = ('api_key' + rand(1..3).to_s).to_sym
+    client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[key],
                                    connect_timeout: 300)
     remote_stock = TwelvedataRuby.client.quote(symbol: ticker_symbol).parsed_body
     unless remote_stock[:code].present?
@@ -22,11 +23,18 @@ class Stock < ApplicationRecord
     all.each do |s|
       next unless s.updated_at < 10.minutes.ago
 
-      client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
+      key = ('api_key' + rand(1..3).to_s).to_sym
+      client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[key],
                                      connect_timeout: 300)
-      remote_stock = TwelvedataRuby.client.quote(symbol: s.ticker).parsed_body
-      s.last_price = remote_stock[:close].to_d
-      s.exchange = remote_stock[:exchange]
+      td_stock = TwelvedataRuby.client.quote(symbol: s.ticker).parsed_body
+      if td_stock[:code]
+        logger.debug 'API Error Detected'
+        flash.now[:alert] = "Status: #{td_stock[:status]}, Code: #{td_stock[:code]}, Message: #{td_stock[:message]}"
+      end
+      break if td_stock[:code]
+
+      s.last_price = td_stock[:close].to_d
+      s.exchange = td_stock[:exchange]
       s.save
       sleep(15)
       respond_to do |format|

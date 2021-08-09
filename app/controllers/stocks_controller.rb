@@ -32,7 +32,8 @@ class StocksController < ApplicationController
         next unless stock.updated_at + 10.minutes < Time.now
 
         logger.debug 'Made it into block'
-        client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
+        key = ('api_key' + rand(1..3).to_s).to_sym
+        client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[key],
                                        connect_timeout: 300)
         td_stock = TwelvedataRuby.client.quote(symbol: stock.ticker).parsed_body
         if td_stock[:code]
