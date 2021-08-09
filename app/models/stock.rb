@@ -26,7 +26,7 @@ class Stock < ApplicationRecord
                                      connect_timeout: 300)
       remote_stock = TwelvedataRuby.client.quote(symbol: s.ticker).parsed_body
       s.last_price = remote_stock[:close].to_d
-      s.exchange = remote_stock[:echange]
+      s.exchange = remote_stock[:exchange]
       s.save
       sleep(15)
     end
