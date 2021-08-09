@@ -25,13 +25,21 @@ class StocksController < ApplicationController
     @tracked_stocks = current_user.stocks
     @stocks = Stock.all
     td_stock = []
+    cur_key = 1
+    last_key = 3
     if @stocks
       @stocks.each do |stock|
         logger.debug "#{stock.ticker} updated at: #{stock.updated_at} ten minutes ago was #{10.minutes.ago}"
         logger.debug "#{stock.ticker} updated at vs now: #{Time.now - (stock.updated_at + 10.minutes)}"
         next unless stock.updated_at + 10.minutes < Time.now
 
-        key = ('api_key' + rand(1..3).to_s).to_sym
+        key = ('api_key' + cur_key.to_s).to_sym
+        if cur_key < last_key
+          cur_key += 1
+        else
+          cur_key = 1
+        end
+
         logger.debug "Made it into block key: #{key}"
         client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[key],
                                        connect_timeout: 300)

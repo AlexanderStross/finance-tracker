@@ -20,10 +20,17 @@ class Stock < ApplicationRecord
   end
 
   def self.update_prices
+    cur_key = 1
+    last_key = 3
     all.each do |s|
       next unless s.updated_at < 10.minutes.ago
 
       key = ('api_key' + rand(1..3).to_s).to_sym
+      if cur_key < last_key
+        cur_key += 1
+      else
+        cur_key = 1
+      end
       client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[key],
                                      connect_timeout: 300)
       td_stock = TwelvedataRuby.client.quote(symbol: s.ticker).parsed_body
