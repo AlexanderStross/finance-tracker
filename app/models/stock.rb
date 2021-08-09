@@ -37,15 +37,12 @@ class Stock < ApplicationRecord
       s.exchange = td_stock[:exchange]
       s.save
       sleep(15)
-      respond_to do |format|
-        flash.now[:notice] = 'Prices updated!' unless td_stock[:code]
-        format.js { render partial: 'stocks/update_list' }
-      end
     end
 
     def self.update_price(_ticker_symbol)
       if s = where(ticker: _ticker_symbol).first && !(s.updated_at < 10.minutes.ago)
-        client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[:api_key],
+        key = ('api_key' + rand(1..3).to_s).to_sym
+        client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[key],
                                        connect_timeout: 300)
         remote_stock = TwelvedataRuby.client.quote(symbol: _ticker_symbol).parsed_body
         s.last_price = remote_stock[:close].to_d
