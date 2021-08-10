@@ -6,5 +6,5 @@
 #   sleep wait_time if wait_time > 0
 # end
 task update_tickers: :environment do
-  Stock.update_prices
+  Stock.update_data
 end

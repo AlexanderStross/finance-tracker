@@ -19,7 +19,7 @@ class Stock < ApplicationRecord
     where(ticker: ticker_symbol).first
   end
 
-  def self.update_prices
+  def self.update_data
     cur_key = 1
     last_key = 5
     all.each do |s|
