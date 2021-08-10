@@ -30,16 +30,19 @@ $(document).ready(function () {
   }, 5000); // In every 5 seconds
 });
 });
+$( document ).ready(function() {
 
-$(document).ready(function () {
+  // hide spinner
+  $(".spinner").hide();
 
-// hide spinner
-$(".spinner").hide();
-
+  $('#update').click(function(){
+    $(".spinner").show();
+  });
 
 });
+
 </script>
-<div class="row"><%= link_to('Update Prices Now', update_prices_now_path, remote: true, method: :get , class: "btn btn-success logout-button col-2") %>
+<div class="row"><%= link_to('Update Prices Now', update_prices_now_path, remote: true, method: :get , id: "update", class: "btn btn-success logout-button col-2") %>
 <div class="spinner spinner-border float-right text-success" role="status"></div>
 </div>
 <p>This may take a while as the free api key I'm using only allows 8 transcations a minute. Markets that are closed will not update. Assets prices are updated every 10 minutes.</p>
