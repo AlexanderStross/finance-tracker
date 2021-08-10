@@ -13,6 +13,14 @@ class UsersController < ApplicationController
     @tracked_stocks = @user.stocks
   end
 
+  def refresh_table
+    @user = current_user
+    @tracked_stocks = current_user.stocks
+    respond_to do |format|
+      format.js { render 'users/refresh_table' }
+    end
+  end
+
   def search
     if params[:friend].present?
       @friends = User.search(params[:friend])

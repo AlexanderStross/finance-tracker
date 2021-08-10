@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'update_prices_now', to: 'stocks#update_prices_now'
   get 'friends', to: 'users#friends'
   get 'search_friend', to: 'users#search'
+  get 'refresh_table', to: 'users#refresh_table', remote: true
   resources :friendships, only: %i[create destroy]
   resources :users, only: [:show]
 end

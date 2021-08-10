@@ -7,6 +7,7 @@
           <th scope="col">Exchange</th>
           <th scope="col">Name</th>
           <th scope="col">Price</th>
+          <th scope="col">Delta</th>
           <th scope="col">Updated</th>
           <th scope="col">Actions</th>
         </tr>
@@ -17,7 +18,15 @@
             <th scope="row"><%= stock.ticker %></th>
             <td><%= stock.exchange %></td>
             <td><%= stock.name %></td>
-            <td><%= stock.last_price %></td>
+            <td><%= stock.last_price.round(5) %></td>
+            <td class="<% if stock.delta > 0 %>
+                       text-success"> <%= fa_icon 'angle-up' %>
+                       <% elsif stock.delta < 0 %>
+                        text-danger"> <%= fa_icon 'angle-down' %>
+                        <% else %>
+                        text-muted"> &nbsp;&nbsp;&nbsp;
+                         <% end %>
+                         <%= number_to_percentage(stock.delta, precision: 5) %></td>
             <td><%= time_ago_in_words(stock.updated_at) %> ago</td>
             <td><% if current_user.can_track_stock?(stock.ticker) %>
                   <%= link_to 'Add to portfolio', user_stocks_path(user: current_user, ticker: stock.ticker),

@@ -5,7 +5,7 @@ class Stock < ApplicationRecord
   validates :name, :ticker, presence: true
 
   def self.new_lookup(ticker_symbol)
-    key = ('api_key' + rand(1..3).to_s).to_sym
+    key = ('api_key' + rand(1..5).to_s).to_sym
     client = TwelvedataRuby.client(apikey: Rails.application.credentials.twelvedata_client[key],
                                    connect_timeout: 300)
     remote_stock = TwelvedataRuby.client.quote(symbol: ticker_symbol).parsed_body
@@ -21,7 +21,7 @@ class Stock < ApplicationRecord
 
   def self.update_prices
     cur_key = 1
-    last_key = 3
+    last_key = 5
     all.each do |s|
       next unless s.updated_at < 10.minutes.ago
 
@@ -42,6 +42,7 @@ class Stock < ApplicationRecord
 
       s.last_price = td_stock[:close].to_d
       s.exchange = td_stock[:exchange]
+      s.delta = (td_stock[:close].to_d - s.last_price) / s.last_price if stock.last_price.pressent?
       s.save
       sleep(15)
     end

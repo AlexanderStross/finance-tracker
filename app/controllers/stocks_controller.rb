@@ -26,7 +26,7 @@ class StocksController < ApplicationController
     @stocks = Stock.all
     td_stock = []
     cur_key = 1
-    last_key = 3
+    last_key = 5
     if @stocks
       @stocks.each do |stock|
         logger.debug "#{stock.ticker} updated at: #{stock.updated_at} ten minutes ago was #{10.minutes.ago}"
@@ -53,8 +53,9 @@ class StocksController < ApplicationController
         logger.debug td_stock.to_s
         logger.debug "#{stock.ticker} price saved in database: #{stock.last_price} remote price: #{td_stock[:close].to_d}"
         logger.debug "#{stock.ticker} Price Changed? : #{stock.last_price != td_stock[:close].to_d}"
-        stock.update(last_price: td_stock[:close].to_d, exchange: td_stock[:exchange])
-        sleep(8) unless stock == @stocks.last
+        stock.update(delta: (td_stock[:close].to_d - stock.last_price) / stock.last_price,
+                     last_price: td_stock[:close].to_d, exchange: td_stock[:exchange])
+        sleep(2) unless stock == @stocks.last
       end
       respond_to do |format|
         flash.now[:notice] = 'Prices updated!' unless td_stock[:code]
