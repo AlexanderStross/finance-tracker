@@ -31,7 +31,7 @@ class StocksController < ApplicationController
       @stocks.each do |stock|
         logger.debug "#{stock.ticker} updated at: #{stock.updated_at} ten minutes ago was #{10.minutes.ago}"
         logger.debug "#{stock.ticker} updated at vs now: #{Time.now - (stock.updated_at + 10.minutes)}"
-        next unless stock.updated_at + 10.minutes < Time.now
+        next unless stock.updated_at + 3.minutes < Time.now
 
         key = ('api_key' + cur_key.to_s).to_sym
         if cur_key < last_key
