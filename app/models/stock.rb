@@ -23,7 +23,7 @@ class Stock < ApplicationRecord
     cur_key = 1
     last_key = 5
     all.each do |s|
-      next unless s.updated_at < 10.minutes.ago
+      next unless s.updated_at + 3.minutes < Time.now
 
       key = ('api_key' + rand(1..3).to_s).to_sym
       if cur_key < last_key
