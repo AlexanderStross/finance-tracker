@@ -29,4 +29,5 @@ $(document).on('turbolinks:load', function() {
       $(this).remove();
     });
   }, 3000);
+  $(".spinner").hide();
 })
