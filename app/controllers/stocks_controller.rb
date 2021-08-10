@@ -53,7 +53,7 @@ class StocksController < ApplicationController
         logger.debug td_stock.to_s
         logger.debug "#{stock.ticker} price saved in database: #{stock.last_price} remote price: #{td_stock[:close].to_d}"
         logger.debug "#{stock.ticker} Price Changed? : #{stock.last_price != td_stock[:close].to_d}"
-        stock.update(delta: (td_stock[:close].to_d - stock.last_price) / stock.last_price,
+        stock.update(delta: (td_stock[:close].to_d - stock.last_price) / stock.last_price if stock.last_price.present?,
                      last_price: td_stock[:close].to_d, exchange: td_stock[:exchange])
         sleep(2) unless stock == @stocks.last
       end
