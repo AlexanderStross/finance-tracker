@@ -34,6 +34,24 @@
       }, 5000); // In every 5 seconds
     });
   });
+
+  $( document ).ready(function() {
+
+    // hide spinner
+    $(".spinner").hide();
+
+
+    // show spinner on AJAX start
+    $(document).ajaxStart(function(){
+      $(".spinner").show();
+    });
+
+    // hide spinner on AJAX stop
+    $(document).ajaxStop(function(){
+      $(".spinner").hide();
+    });
+
+  });  
 </script>
 <%= link_to('Update Prices Now', update_prices_now_path, remote: true, method: :get , class: "btn btn-success logout-button") %> <div id="spinner"></div>
 <p>This may take a while as the free api key I'm using only allows 8 transcations a minute.

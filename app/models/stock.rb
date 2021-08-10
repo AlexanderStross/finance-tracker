@@ -42,7 +42,7 @@ class Stock < ApplicationRecord
 
       s.last_price = td_stock[:close].to_d
       s.exchange = td_stock[:exchange]
-      s.delta = (td_stock[:close].to_d - s.last_price) / s.last_price if s.last_price.present?
+      s.delta = (td_stock[:close].to_d - s.last_price) / s.last_price
       s.save
       sleep(15)
     end
