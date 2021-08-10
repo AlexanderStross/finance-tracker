@@ -21,20 +21,7 @@
 <%= render 'stocks/list'%>
 <% end %>
 </div>
-<script>
-  var action = '/refresh_table'
-  $(function() {
-    $(document).ready(function() {
-      setInterval(function() {
-        jQuery.ajax({
-          url: action,
-          type: "GET",
-          dataType: "script"
-        });
-      }, 30000); // In every 30 seconds
-    });
-  });
-</script>
+
 <%= link_to('Update Prices Now', update_prices_now_path, remote: true, method: :get , class: "btn btn-success logout-button") %> <div id="spinner"></div>
 <p>This may take a while as the free api key I'm using only allows 8 transcations a minute.
 Markets that are closed will not update.  If all the prices show 0 that is because I exceed
