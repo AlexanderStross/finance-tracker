@@ -51,8 +51,8 @@
       $(".spinner").hide();
     });
 
-  });  
+  });
 </script>
-<%= link_to('Update Prices Now', update_prices_now_path, remote: true, method: :get , class: "btn btn-success logout-button") %> <div id="spinner"></div>
+<%= link_to('Update Prices Now', update_prices_now_path, remote: true, method: :get , class: "btn btn-success logout-button") %> <div id="spinner"><div class="spinner-border text-success" role="status"><span class="sr-only">Loading...</span></div></div>
 <p>This may take a while as the free api key I'm using only allows 8 transcations a minute.
 Markets that are closed will not update.  Assets prices are updated every 10 minutes.</p>
