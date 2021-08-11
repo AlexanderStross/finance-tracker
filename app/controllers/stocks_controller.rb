@@ -26,7 +26,7 @@ class StocksController < ApplicationController
     @stocks = Stock.all
     td_stock = []
     cur_key = 1
-    last_key = 5
+    last_key = 10
     if @stocks
       @stocks.each do |stock|
         logger.debug "#{stock.ticker} updated at: #{stock.updated_at} ten minutes ago was #{10.minutes.ago}"
