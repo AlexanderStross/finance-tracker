@@ -44,7 +44,7 @@ class Stock < ApplicationRecord
       s.last_price = td_stock[:close].to_d
       s.exchange = td_stock[:exchange]
       s.save
-      sleep(15)
+      # sleep(15)
     end
     respond_to do |format|
       flash.now[:notice] = 'Prices updated!' unless td_stock[:code]

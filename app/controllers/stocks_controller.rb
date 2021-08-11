@@ -55,7 +55,7 @@ class StocksController < ApplicationController
         logger.debug "#{stock.ticker} Price Changed? : #{stock.last_price != td_stock[:close].to_d}"
         stock.update(delta: (td_stock[:close].to_d - stock.last_price) / stock.last_price,
                      last_price: td_stock[:close].to_d, exchange: td_stock[:exchange])
-        sleep(2) unless stock == @stocks.last
+        # sleep(2) unless stock == @stocks.last
       end
       respond_to do |format|
         flash.now[:notice] = 'Prices updated!' unless td_stock[:code]
