@@ -46,9 +46,7 @@ class Stock < ApplicationRecord
       s.save
       # sleep(15)
     end
-    respond_to do |format|
-      flash.now[:notice] = 'Prices updated!' unless td_stock[:code]
-      format.js { render partial: 'stocks/update_list' }
-    end
+    flash.now[:notice] = 'Prices updated!' unless td_stock[:code]
+    format.js { render partial: 'stocks/update_list' }
   end
 end
