@@ -11,7 +11,7 @@ class Stock < ApplicationRecord
     remote_stock = TwelvedataRuby.client.quote(symbol: ticker_symbol).parsed_body
     unless remote_stock[:code].present?
       new(ticker: ticker_symbol, name: remote_stock[:name],
-          last_price: remote_stock[:close].to_d, exchange: remote_stock[:exchange])
+          last_price: remote_stock[:close].to_d, exchange: remote_stock[:exchange], delta: 0)
     end
   end
 
